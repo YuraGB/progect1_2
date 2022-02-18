@@ -1,26 +1,35 @@
-import React, {useContext, useEffect, useState} from "react";
-import {merge} from "lodash-es";
+import React, {useContext, useState} from "react";
 import {DataLayer} from "../Datalayer/datalayer";
 // @ts-ignore
 import {useHistory} from "react-router";
 
-const StoreThemePropertiesDictionary = {
-    "ALDO": {
+type theme = {
+    [key: string] : storeTheme
+};
+
+type storeTheme = {
+    name: string,
+    cleanSelf: Function,
+    applySelf: Function
+};
+
+const storeThemePropertiesDictionary: theme = {
+    "LIGHT": {
         name: 'ALDO_STORE_NAME',
         cleanSelf: (args: any) => {
-            document.body.classList.remove('store-aldo');
+            document.body.classList.remove('dark');
         },
         applySelf: (args: any) => {
-            document.body.classList.add('store-aldo');
+            document.body.classList.add('light');
         }
     },
-    "CIS": {
+    "DARK": {
         name: 'CIS_STORE_NAME',
         cleanSelf: (args: any) => {
-            document.body.classList.remove('store-aldo');
+            document.body.classList.remove('light');
         },
         applySelf: (args: any) => {
-            document.body.classList.add('store-aldo');
+            document.body.classList.add('dark');
         }
     }
 }
@@ -28,13 +37,13 @@ const StoreThemePropertiesDictionary = {
 export const Theme = React.createContext(null);
 
 const removeAllStores = () => {
-    for (const store in StoreThemePropertiesDictionary) {
-        StoreThemePropertiesDictionary[store].cleanSelf();
+    for (const store in storeThemePropertiesDictionary) {
+        storeThemePropertiesDictionary[store].cleanSelf();
     }
 }
 
 export const ThemeProvider: React.FC = ({ children }) => {
-    const [store, setStore] = useState('');
+    const [store, setStore] = useState<storeTheme | null>(null);
      const history = useHistory();
     // useEffect(() => {
     //     const storeType = getStoreType();
@@ -49,7 +58,7 @@ export const ThemeProvider: React.FC = ({ children }) => {
     };
 
     const applyStore: Function = (storeType: string) => {
-        const newStore = StoreThemePropertiesDictionary[storeType];
+        const newStore = storeThemePropertiesDictionary[storeType];
         removeAllStores();
         newStore.applySelf();
         setStore(newStore);
