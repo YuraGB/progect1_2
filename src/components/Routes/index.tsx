@@ -6,7 +6,7 @@ const Routes: React.FC = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={()=>null} />
+                <Route path="/" element={()=>{}} />
              </Routes>
         </BrowserRouter>
     );
