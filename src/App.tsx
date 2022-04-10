@@ -1,6 +1,6 @@
 import React from 'react';
 import { HelmetProvider as HeadProvider } from 'react-helmet-async';
-import Routes from "./components/Routes";
+import Routs from "./components/Routes";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
             {/* <StoreTitle />*/}
             {/* <Header /> */}
         <main>
-           <Routes />
+           <Routs />
            {/* <Footer />*/}
         </main>
 
